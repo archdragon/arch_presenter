@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'arch_presenter'
 require 'delegate'
+require 'arch_presenter'
 
 class String
   # Constantize method from github.com/rails/rails
