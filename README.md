@@ -21,6 +21,8 @@ And then run:
 
 ### Super-quick example
 
+Simple, skinny model:
+
 ```ruby
 # app/models/user.rb
 class User
@@ -39,6 +41,8 @@ class User
 end
 ```
 
+Presentation logic moved to the presenter:
+
 ```ruby
 # app/presenters/user_presenter.rb
 class UserPresenter < ArchPresenter::Base
@@ -52,6 +56,8 @@ class UserPresenter < ArchPresenter::Base
 end
 ```
 
+Presenting the object in the controller:
+
 ``` ruby
 # app/controllers/users_cotroller.rb
 class UsersController < ApplicationController
@@ -61,6 +67,8 @@ class UsersController < ApplicationController
   end
 end
 ```
+
+Using the `display_name` function:
 
 ```ruby
 # app/views/users/show.html.erb
