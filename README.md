@@ -19,11 +19,59 @@ And then run:
 
 ## Usage
 
+### Super-quick example
+
+```ruby
+# app/models/user.rb
+class User
+  def first_name
+    'John'
+  end
+  def last_name
+    'Smith'
+  end
+  def title
+    'Mr.'
+  end
+  def name_visible?
+    true
+  end
+end
+```
+
+```ruby
+# app/presenters/user_presenter.rb
+class UserPresenter < ArchPresenter::Base
+  def display_name
+    if name_visible? 
+      [title, first_name, last_name].join(' ')
+    else
+      '(Name hidden)'
+    end
+  end
+end
+```
+
+``` ruby
+# app/controllers/users_cotroller.rb
+class UsersController < ApplicationController
+  def show
+    @user = User.find(params[:id])
+    @user = present(@user)
+  end
+end
+```
+
+```ruby
+# app/views/users/show.html.erb
+<h1><%=@user.display_name %> - User profile</h1>
+```
+
 ### Creating presenter classes
 
 First you will need to create a class that will be used to decorate your object.
 
-Presenter class files should be placed in `app/presenters/`.
+Presenter class files should be placed in `app/presenters/` and should inherit from `ArchPresenter::Base`.
 
 ### Autoloading
 
@@ -57,19 +105,70 @@ Hello <%= @user.full_name %>!
 </body>
 ```
 
-### Simple example
+### Mini-tutorial
 
 We have a user model that looks like this:
 
 ```ruby
-class User < ActiveRecors::Base
+# app/models/user.rb
+class User < ActiveRecord::Base
+  def first_name
+    'John'
+  end
+  def last_name
+    'Smith'
+  end
+  def title
+    'Mr.'
+  end
+  def name_visible?
+    true
+  end
   def display_name
-    [first_name, last_name].join(' ')
+    if name_visible? 
+      [title, first_name, last_name].join(' ')
+    else
+      '(Name hidden)'
+    end
   end
 end
 ```
 
-where `first_name` and `last_name` are both user table cloumns and `display_name` is only used to show the full name in the while displaying information about the user.
+where `first_name`, `last_name` and `title` are both user table cloumns and `display_name` is only used to show the full name in the while displaying information about the user. `display_name` doesn't really belong to the model and we want to move it to a separate class - the presenter.
+
+We create a new file in `app/presenters` and move the `display_name` there:
+
+```ruby
+class UserPresenter < ActiveRecord::Base
+  def display_name
+    if name_visible? 
+      [title, first_name, last_name].join(' ')
+    else
+      '(Name hidden)'
+    end
+  end
+end
+```
+
+Now in our controller we can use the `present` method:
+
+``` ruby
+# app/controllers/users_cotroller.rb
+class UsersController < ApplicationController
+  def show
+    @user = User.find(params[:id])
+    @user = present(@user)
+  end
+end
+```
+
+This will add the `display_name` method to our `@user`. We can now use it in the view:
+
+```ruby
+# app/views/users/show.html.erb
+<h1><%=@user.display_name %> - User profile</h1>
+```
+
 
 ## Contributing
 
