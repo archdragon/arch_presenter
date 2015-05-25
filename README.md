@@ -2,7 +2,7 @@
 
 ArchPresenter is a simple, lightweight gem that implements the Presenter pattern.
 
-It allows you to slim down your models and controllers by extracting the logic related to class presentation.
+It allows you to slim down your models and controllers by extracting the logic related to class presentation. You can learn more about this pattern [on the Jay Fields' blog](http://blog.jayfields.com/2007/03/rails-presenter-pattern.html).
 
 ## Installation
 
