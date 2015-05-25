@@ -142,7 +142,7 @@ class User < ActiveRecord::Base
 end
 ```
 
-where `first_name`, `last_name` and `title` are both user table cloumns and `display_name` is only used to show the full name in the while displaying information about the user. `display_name` doesn't really belong to the model and we want to move it to a separate class - the presenter.
+where `first_name`, `last_name` and `title` are user table cloumns and `display_name` is only used to show the name while displaying information about the user. `display_name` doesn't really belong to the model and we want to move it to a separate class - the presenter.
 
 We create a new file in `app/presenters` and move the `display_name` there:
 
